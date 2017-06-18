@@ -1,11 +1,17 @@
-import { INPUT_CHANGE } from '../actions'
+import { INPUT_CHANGE, ADD_TODO } from '../actions'
 
 const initialState = {
-    inputVal: ''
+    inputVal: '',
+    todoList: null,
 }
 
 export default (state = initialState, action) => {
     switch(action.type){
+        case ADD_TODO:
+            return {
+                ...state,
+                inputVal: ''
+            }
         case INPUT_CHANGE:
             return {
                 ...state,
