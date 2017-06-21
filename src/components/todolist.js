@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { inputChange, addTodo, getTodos } from '../actions' 
+import { inputChange, addTodo, getTodos, toggleTodo } from '../actions' 
 
 class TodoList extends Component {
     constructor(props){
@@ -8,6 +8,7 @@ class TodoList extends Component {
 
         this.onInputChange = this.inputChange.bind(this)
         this.onAdd = this.onAdd.bind(this)
+        this.onCheckboxChange = this.onCheckboxChange.bind(this)
     }
 
     componentWillMount(){
@@ -20,6 +21,10 @@ class TodoList extends Component {
 
     onAdd(){
         this.props.addTodo(this.props.inputVal)
+    }
+
+    onCheckboxChange(id, completed){
+        this.props.toggleTodo({id, completed})
     }
 
     render() {
@@ -36,7 +41,11 @@ class TodoList extends Component {
                     {this.props.todoList && this.props.todoList.map((todo) => {
                         return (
                             <li>
-                                <input type="checkbox" checked={todo.completed}/>
+                                <input 
+                                    checked={todo.completed}
+                                    type="checkbox"
+                                    onChange={() => this.onCheckboxChange(todo._id, todo.completed)}
+                                />
                                 {todo.text}
                             </li>
                         )
@@ -47,18 +56,16 @@ class TodoList extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    console.log(state)
-    return {
-        inputVal: state.todolist.inputVal,
-        todoList: state.todolist.todoList
-    }
-}
+const mapStateToProps = state => ({
+    inputVal: state.todolist.inputVal,
+    todoList: state.todolist.todoList
+})
 
 const mapDispatchToProps = {
     inputChange,
     addTodo,
-    getTodos
+    getTodos,
+    toggleTodo
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoList)

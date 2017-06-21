@@ -7,8 +7,16 @@ exports.handleGetTodos = (req, res) => {
 
 exports.handleCreateTodo = (req, res) => {
     Todo.create({ text: req.body.text })
-        .then(() => {
-            Todo.find({})
-                .then((todos) => res.send(todos))
+        .then((todo) => {
+            res.send(todo)
+        })
+}
+
+exports.handleUpdateTodo = (req, res) => {
+    Todo.findById({_id: req.body.id})
+        .then((todo) => {
+            todo.completed = !todo.completed
+            todo.save()
+            res.send(todo)
         })
 }

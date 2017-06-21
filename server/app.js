@@ -12,5 +12,6 @@ app.use(bodyParser.json())
 const todoRoutes = require('./routes/todo')
 app.get('/todo', todoRoutes.handleGetTodos)
 app.post('/todo', todoRoutes.handleCreateTodo)
+app.put('/todo', todoRoutes.handleUpdateTodo)
 
 app.listen(3000, () => console.log('Server is running on port 3000'))

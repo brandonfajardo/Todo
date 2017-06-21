@@ -1,4 +1,4 @@
-import { INPUT_CHANGE, ADD_TODO, SET_TODOS } from '../actions'
+import { INPUT_CHANGE, ADD_TODO, SET_TODOS, SET_UPDATED_TODOS } from '../actions'
 
 const initialState = {
     inputVal: '',
@@ -10,7 +10,7 @@ export default (state = initialState, action) => {
         case ADD_TODO:
             return {
                 ...state,
-                todoList: action.item.data,
+                todoList: [...state.todoList].concat(action.item.data),
                 inputVal: ''
             }
         case INPUT_CHANGE:
@@ -22,6 +22,18 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 todoList: action.item.data
+            }
+        case SET_UPDATED_TODOS: 
+            const updatedTodos = state.todoList.map((todo) => {
+                if (todo._id == action.item.data._id){
+                    todo.completed = action.item.data.completed
+                }
+                return todo
+            })
+
+            return {
+                ...state,
+                todoList: updatedTodos
             }
         default:
             return state
