@@ -20,3 +20,12 @@ exports.handleUpdateTodo = (req, res) => {
             res.send(todo)
         })
 }
+
+exports.handleDeleteTodo = (req, res) => {
+    Todo.findById({_id: req.body.id})
+        .then((todo) => {
+            todo.remove()
+            todo.save()
+            res.send(todo)
+        })
+}

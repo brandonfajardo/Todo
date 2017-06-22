@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { inputChange, addTodo, getTodos, toggleTodo } from '../actions' 
+import { inputChange, addTodo, getTodos, toggleTodo, removeTodo } from '../actions' 
 
 class TodoList extends Component {
     constructor(props){
@@ -9,6 +9,7 @@ class TodoList extends Component {
         this.onInputChange = this.inputChange.bind(this)
         this.onAdd = this.onAdd.bind(this)
         this.onCheckboxChange = this.onCheckboxChange.bind(this)
+        this.onRemove = this.onRemove.bind(this)
     }
 
     componentWillMount(){
@@ -25,6 +26,10 @@ class TodoList extends Component {
 
     onCheckboxChange(id, completed){
         this.props.toggleTodo({id, completed})
+    }
+
+    onRemove(id){
+        this.props.removeTodo({id})
     }
 
     render() {
@@ -47,6 +52,7 @@ class TodoList extends Component {
                                     onChange={() => this.onCheckboxChange(todo._id, todo.completed)}
                                 />
                                 {todo.text}
+                                <span onClick={() => this.onRemove(todo._id)} style={{marginLeft: '20px', cursor: 'pointer'}}>x</span>
                             </li>
                         )
                     })}
@@ -65,7 +71,8 @@ const mapDispatchToProps = {
     inputChange,
     addTodo,
     getTodos,
-    toggleTodo
+    toggleTodo,
+    removeTodo
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoList)

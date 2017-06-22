@@ -1,4 +1,4 @@
-import { INPUT_CHANGE, ADD_TODO, SET_TODOS, SET_UPDATED_TODOS } from '../actions'
+import { INPUT_CHANGE, ADD_TODO, SET_TODOS, TOGGLE_TODO, REMOVE_TODO } from '../actions'
 
 const initialState = {
     inputVal: '',
@@ -23,8 +23,8 @@ export default (state = initialState, action) => {
                 ...state,
                 todoList: action.item.data
             }
-        case SET_UPDATED_TODOS: 
-            const updatedTodos = state.todoList.map((todo) => {
+        case TOGGLE_TODO:
+            let updatedTodos = state.todoList.map((todo) => {
                 if (todo._id == action.item.data._id){
                     todo.completed = action.item.data.completed
                 }
@@ -34,6 +34,18 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 todoList: updatedTodos
+            }
+        case REMOVE_TODO:
+            let updatedTodoList = state.todoList.filter((todo) => {
+                if (todo._id == action.item.data._id){
+                    return false
+                }
+                return todo
+            })
+
+            return {
+                ...state,
+                todoList: updatedTodoList
             }
         default:
             return state
