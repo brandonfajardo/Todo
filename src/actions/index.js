@@ -3,6 +3,7 @@ export const INPUT_CHANGE = 'INPUT_CHANGE'
 export const SET_TODOS = 'SET_TODOS'
 export const TOGGLE_TODO = 'TOGGLE_TODO'
 export const REMOVE_TODO = 'REMOVE_TODO'
+export const REMOVE_SELECTED_TODOS = 'REMOVE_SELECTED_TODOS'
 
 import axios from 'axios' // Fetch library
 const url = 'http://localhost:3000'
@@ -39,6 +40,15 @@ export const removeTodo = item => {
         axios.delete(`${url}/todo`, {data: {id: item.id}})
             .then((todo) => {
                 dispatch({ type: REMOVE_TODO, item: todo })
+            })
+    }
+}
+
+export const removeSelectedTodos = () => {
+    return (dispatch) => {
+        axios.delete(`${url}/todos`, {})
+            .then((todos) => {
+                dispatch({ type: REMOVE_SELECTED_TODOS, item: todos })
             })
     }
 }

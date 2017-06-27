@@ -1,4 +1,4 @@
-import { INPUT_CHANGE, ADD_TODO, SET_TODOS, TOGGLE_TODO, REMOVE_TODO } from '../actions'
+import { INPUT_CHANGE, ADD_TODO, SET_TODOS, TOGGLE_TODO, REMOVE_TODO, REMOVE_SELECTED_TODOS } from '../actions'
 
 const initialState = {
     inputVal: '',
@@ -46,6 +46,11 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 todoList: updatedTodoList
+            }
+        case REMOVE_SELECTED_TODOS:
+            return {
+                ...state,
+                todoList: action.item.data
             }
         default:
             return state

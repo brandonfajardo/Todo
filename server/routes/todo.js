@@ -29,3 +29,17 @@ exports.handleDeleteTodo = (req, res) => {
             res.send(todo)
         })
 }
+
+exports.handleDeleteSelectedTodos = (req, res) => {
+    Todo.find({})
+        .then((todos) => {
+            let updatedTodos = todos.filter((todo) => {
+                if (todo.completed){
+                    todo.remove()
+                    return false
+                }
+                return todo
+            })
+            res.send(updatedTodos)
+        })
+}

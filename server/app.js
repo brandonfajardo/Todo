@@ -14,5 +14,6 @@ app.get('/todo', todoRoutes.handleGetTodos)
 app.post('/todo', todoRoutes.handleCreateTodo)
 app.put('/todo', todoRoutes.handleUpdateTodo)
 app.delete('/todo', todoRoutes.handleDeleteTodo)
+app.delete('/todos', todoRoutes.handleDeleteSelectedTodos)
 
 app.listen(3000, () => console.log('Server is running on port 3000'))

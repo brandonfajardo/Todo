@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { inputChange, addTodo, getTodos, toggleTodo, removeTodo } from '../actions' 
+import { inputChange, addTodo, getTodos, toggleTodo, removeTodo, removeSelectedTodos } from '../actions' 
 
 class TodoList extends Component {
     constructor(props){
@@ -10,6 +10,7 @@ class TodoList extends Component {
         this.onAdd = this.onAdd.bind(this)
         this.onCheckboxChange = this.onCheckboxChange.bind(this)
         this.onRemove = this.onRemove.bind(this)
+        this.onRemoveSelected = this.onRemoveSelected.bind(this)
     }
 
     componentWillMount(){
@@ -32,6 +33,11 @@ class TodoList extends Component {
         this.props.removeTodo({id})
     }
 
+    onRemoveSelected(){
+        console.log('yo')
+        this.props.removeSelectedTodos()
+    }
+
     render() {
         return (
             <div>
@@ -41,7 +47,8 @@ class TodoList extends Component {
                     value={this.props.inputVal}
                     onChange={(e) => this.onInputChange(e)}
                 />
-                <button onClick={this.onAdd}>Add</button>
+                <button onClick={this.onAdd}>Add</button> <br /><br />
+                <button onClick={this.onRemoveSelected}>Remove Selected</button>
                 <ul>
                     {this.props.todoList && this.props.todoList.map((todo) => {
                         return (
@@ -72,7 +79,8 @@ const mapDispatchToProps = {
     addTodo,
     getTodos,
     toggleTodo,
-    removeTodo
+    removeTodo,
+    removeSelectedTodos
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoList)
