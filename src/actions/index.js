@@ -4,6 +4,8 @@ export const SET_TODOS = 'SET_TODOS'
 export const TOGGLE_TODO = 'TOGGLE_TODO'
 export const REMOVE_TODO = 'REMOVE_TODO'
 export const REMOVE_SELECTED_TODOS = 'REMOVE_SELECTED_TODOS'
+export const EDIT_INPUT_CHANGE = 'EDIT_INPUT_CHANGE'
+export const UPDATE_TODO_TEXT = 'UPDATE_TODO_TEXT'
 
 import axios from 'axios' // Fetch library
 const url = 'http://localhost:3000'
@@ -28,7 +30,7 @@ export const addTodo = item => {
 
 export const toggleTodo = item => {
     return (dispatch) => {
-        axios.put(`${url}/todo`, {id: item.id, completed: item.completed})
+        axios.put(`${url}/todo`, {id: item.id, type: 'updateCompletedVal'})
             .then((todo) => {
                 dispatch({ type: TOGGLE_TODO, item: todo })
             })
@@ -53,4 +55,14 @@ export const removeSelectedTodos = () => {
     }
 }
 
+export const updateTodoText = item => {
+    return (dispatch) => {
+        axios.put(`${url}/todo`, {id: item.id, text: item.text, type: 'updateTodoText'})
+            .then((todo) => {
+                dispatch({ type: UPDATE_TODO_TEXT, item: todo })
+            })
+    }
+}
+
 export const inputChange = item => ({ type: INPUT_CHANGE, item })
+export const editInputChange = item => ({ type: EDIT_INPUT_CHANGE, item })

@@ -1,8 +1,9 @@
-import { INPUT_CHANGE, ADD_TODO, SET_TODOS, TOGGLE_TODO, REMOVE_TODO, REMOVE_SELECTED_TODOS } from '../actions'
+import { INPUT_CHANGE, ADD_TODO, SET_TODOS, TOGGLE_TODO, REMOVE_TODO, REMOVE_SELECTED_TODOS, EDIT_INPUT_CHANGE, UPDATE_TODO_TEXT } from '../actions'
 
 const initialState = {
     inputVal: '',
     todoList: null,
+    editInputVal: null
 }
 
 export default (state = initialState, action) => {
@@ -51,6 +52,24 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 todoList: action.item.data
+            }
+        case EDIT_INPUT_CHANGE: 
+            return {
+                ...state,
+                editInputVal: action.item
+            }
+        case UPDATE_TODO_TEXT:
+            let todos = state.todoList.filter((todo) => {
+                if (todo._id == action.item.data._id){
+                    todo.text = action.item.data.text
+                }
+                return todo
+            })
+
+            return {
+                ...state,
+                todoList: todos,
+                editInputVal: null
             }
         default:
             return state

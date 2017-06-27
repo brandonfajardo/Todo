@@ -15,9 +15,15 @@ exports.handleCreateTodo = (req, res) => {
 exports.handleUpdateTodo = (req, res) => {
     Todo.findById({_id: req.body.id})
         .then((todo) => {
-            todo.completed = !todo.completed
-            todo.save()
-            res.send(todo)
+            if (req.body.type == 'updateCompletedVal'){
+                todo.completed = !todo.completed
+                todo.save()
+                res.send(todo)
+            } else if (req.body.type == 'updateTodoText'){
+                todo.text = req.body.text
+                todo.save()
+                res.send(todo)
+            }
         })
 }
 
